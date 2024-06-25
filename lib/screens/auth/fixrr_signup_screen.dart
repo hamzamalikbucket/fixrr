@@ -555,8 +555,8 @@ class FixrSignUpState extends State<FixrSignUpScreen> {
         "services_prodvides":jsonEncode(selectedServices),
         //"portfolio_img":jsonEncode(base64Images),
        //"porfile_img":_profileImageBase64,
-        "lat":"32.15290269186808",
-        "lon":"74.19000735191902",
+        //"lat":"32.15290269186808",
+        //"lon":"74.19000735191902",
       },
     ).timeout(const Duration(seconds: 10), onTimeout: () {
       setState(() {
