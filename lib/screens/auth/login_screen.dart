@@ -207,8 +207,13 @@ class LoginState extends State<LoginScreen> {
 
         dynamic user = body['user'];
         dynamic role = user['user_type'];
+        Constants.userID=user['id'].toString();
 
         if (role == 'User') {
+          setState(() {
+
+            isLoading=false;
+          });
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
@@ -217,7 +222,11 @@ class LoginState extends State<LoginScreen> {
             (route) => false,
           );
         } else {
+          setState(() {
 
+            isLoading=false;
+          });
+          //route to fixerr screen
 
 
 

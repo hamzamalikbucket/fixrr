@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           Constants.registerUserScreen: (context) => UserSignUpScreen(),
           Constants.registerFixrrScreen: (context) => FixrSignUpScreen(),
           Constants.chooseOptions: (context) => ChooseOptionScreen(),
-          Constants.matchFinderScreen: (context) => MatchList(),
+         // Constants.matchFinderScreen: (context) => MatchList(),
 
 
         }

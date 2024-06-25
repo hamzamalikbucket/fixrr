@@ -10,6 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class MatchList extends StatefulWidget {
+
+  final int jobId;
+
+MatchList({super.key, required this.jobId});
+
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState

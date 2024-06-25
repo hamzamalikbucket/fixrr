@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:http/http.dart' as http;
 
+import 'match_list.dart';
+
 class PostJob extends StatefulWidget {
   final String jobName;
 
@@ -629,11 +631,21 @@ class JobState extends State<PostJob> {
   }
 
   Future<dynamic> postJobFunction() async {
+    print(postCode);
+    print(widget.jobName);
+    print(streetName);
+    print(date);
+    print(_selectedJob);
+    print(_selectedDuration);
+    print("$priceRange-$endPriceRange");
+    print(jobDescription);
+    print(Constants.userID);
+
     setState(() {
       isLoading = true; // Show loader
     });
 
-    var url = Uri.parse('${Constants.baseUrl}/jobs');
+    var url = Uri.parse('${Constants.baseUrl}jobs');
     var response = await http.post(
       url,
       body: {
@@ -646,6 +658,9 @@ class JobState extends State<PostJob> {
         "price_range": "$priceRange-$endPriceRange",
         "description":jobDescription,
         "gear_tool":_selectedGearOption,
+        "lat":"32.15290269186808",
+        "lon":"74.19000735191902",
+        "user_id":Constants.userID,
        // "what":_selectedWhatOption.toString(),
 
 
@@ -660,10 +675,23 @@ class JobState extends State<PostJob> {
       dynamic status = body['status'];
 
       if (status == "success") {
+
+        dynamic jobDetails=body["job"];
+
+        print(jobDetails);
+        dynamic jobId=jobDetails["id"];
         setState(() {
           isLoading = false; // Show loader
         });
-        Navigator.pushNamed(context, Constants.matchFinderScreen);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+            MatchList(jobId:jobId,),
+          ),
+        );
+       // Navigator.pushNamed(context, Constants.matchFinderScreen);
 
       } else {
         setState(() {

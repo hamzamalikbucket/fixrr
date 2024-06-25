@@ -21,6 +21,7 @@ class Constants{
   static const Widget  width10= SizedBox(width: 10);
   static String  deviceID= "";
   static String  searchID= "";
+  static String  userID= "";
   static String  baseUrl= "https://spacexpakistan.com/fixer/public/api/";
 
 

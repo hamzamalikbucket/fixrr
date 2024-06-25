@@ -268,6 +268,7 @@ class SignUpState extends State<UserSignUpScreen> {
       if (status == "success") {
         dynamic user = body['user'];
         dynamic role = user['user_type'];
+        Constants.userID=user['id'].toString();
 
         Navigator.pushAndRemoveUntil(
           context,
