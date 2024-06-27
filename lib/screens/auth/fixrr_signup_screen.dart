@@ -1,17 +1,16 @@
 import 'dart:io';
-
-import 'package:fixrr/resources/utils/app_colors.dart';
-import 'package:fixrr/resources/utils/constants.dart';
-import 'package:fixrr/resources/widgets/BtnNullHeightWidth.dart';
-import 'package:fixrr/resources/widgets/NameInputWidget.dart';
-import 'package:fixrr/resources/widgets/email_input.dart';
-import 'package:fixrr/resources/widgets/text_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'dart:convert';
+import '../../resources/utils/app_colors.dart';
+import '../../resources/utils/constants.dart';
+import '../../resources/widgets/BtnNullHeightWidth.dart';
+import '../../resources/widgets/NameInputWidget.dart';
+import '../../resources/widgets/email_input.dart';
+import '../../resources/widgets/text_widget.dart';
 
 class FixrSignUpScreen extends StatefulWidget {
   @override

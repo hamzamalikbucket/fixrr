@@ -1,15 +1,14 @@
 import 'dart:convert';
-
-import 'package:fixrr/resources/utils/app_colors.dart';
-import 'package:fixrr/resources/utils/constants.dart';
-import 'package:fixrr/resources/widgets/BtnNullHeightWidth.dart';
-import 'package:fixrr/resources/widgets/NameInputWidget.dart';
-import 'package:fixrr/resources/widgets/text_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:http/http.dart' as http;
 
+import '../../resources/utils/app_colors.dart';
+import '../../resources/utils/constants.dart';
+import '../../resources/widgets/BtnNullHeightWidth.dart';
+import '../../resources/widgets/NameInputWidget.dart';
+import '../../resources/widgets/text_widget.dart';
 import 'match_list.dart';
 
 class PostJob extends StatefulWidget {
@@ -52,7 +51,7 @@ class JobState extends State<PostJob> {
     'week',
     'month',
     'year',
-    'single time'
+    'once'
   ];
 
   // This variable holds the selected item
@@ -679,7 +678,7 @@ class JobState extends State<PostJob> {
         dynamic jobDetails=body["job"];
 
         print(jobDetails);
-        dynamic jobId=jobDetails["id"];
+        dynamic jobName = jobDetails["job_name"];
         setState(() {
           isLoading = false; // Show loader
         });
@@ -688,7 +687,7 @@ class JobState extends State<PostJob> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-            MatchList(jobId:jobId,),
+            MatchList(jobName:jobName,),
           ),
         );
        // Navigator.pushNamed(context, Constants.matchFinderScreen);
