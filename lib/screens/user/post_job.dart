@@ -9,6 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:http/http.dart' as http;
+import 'package:geolocator/geolocator.dart';
+
 
 import 'match_list.dart';
 
@@ -38,6 +40,22 @@ class JobState extends State<PostJob> {
       maxDistance,
       jobDescription;
   late String gears;
+  late String currentLat,currentLong;
+
+  String? _currentAddress;
+  Position? _currentPosition;
+
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+    if (!hasPermission) return;
+    await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      setState(() => _currentPosition = position);
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
   // List of items in our dropdown
   final List<String> _jobdropdownItems = ['JOB', 'Hour'];
   final List<String> _whatDropdownItems = [
@@ -68,6 +86,7 @@ class JobState extends State<PostJob> {
 
     // Initialize _selectedOption
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -620,7 +639,22 @@ class JobState extends State<PostJob> {
               final form = jobPostFormKey.currentState;
               form!.save();
               if (form.validate()) {
-                postJobFunction();
+
+
+                try {
+                  _getCurrentPosition();
+                  print("Lat${_currentPosition?.latitude}");
+                  print("Longi${_currentPosition?.longitude}");
+
+                  setState(() {
+                    currentLat=_currentPosition!.latitude.toString();
+                    currentLong=_currentPosition!.longitude.toString();
+                  });
+                  postJobFunction();
+                } catch (e) {
+                  confirmationPopup(
+                      context, "An error Occurred.Try again later!");
+                }
 
               }
             },
@@ -640,6 +674,8 @@ class JobState extends State<PostJob> {
     print("$priceRange-$endPriceRange");
     print(jobDescription);
     print(Constants.userID);
+    print("Converted Longi$currentLong ");
+    print("Converted Lati$currentLat ");
 
     setState(() {
       isLoading = true; // Show loader
@@ -658,8 +694,8 @@ class JobState extends State<PostJob> {
         "price_range": "$priceRange-$endPriceRange",
         "description":jobDescription,
         "gear_tool":_selectedGearOption,
-        "lat":"32.15290269186808",
-        "lon":"74.19000735191902",
+        "lat":currentLat,
+        "lon":currentLong,
         "user_id":Constants.userID,
        // "what":_selectedWhatOption.toString(),
 
@@ -739,5 +775,31 @@ class JobState extends State<PostJob> {
         color: AppColors.redColor,
       )
     ]).show();
+  }
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
   }
 }
