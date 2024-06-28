@@ -1,4 +1,4 @@
-# chat_app
+# fixrr
 
 A new Flutter project.
 

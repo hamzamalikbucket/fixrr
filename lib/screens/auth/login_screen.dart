@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:chat_app/screens/fixrr/fixerr_home.dart';
+import 'package:fixrr/screens/fixrr/fixerr_home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

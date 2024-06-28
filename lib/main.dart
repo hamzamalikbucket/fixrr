@@ -1,14 +1,14 @@
-import 'package:chat_app/resources/utils/app_colors.dart';
-import 'package:chat_app/resources/utils/constants.dart';
-import 'package:chat_app/screens/auth/fixrr_signup_screen.dart';
-import 'package:chat_app/screens/auth/login_screen.dart';
-import 'package:chat_app/screens/auth/user_signup_screen.dart';
-import 'package:chat_app/screens/choose_option_screen.dart';
-import 'package:chat_app/screens/fixrr/chat_partners.dart';
-import 'package:chat_app/screens/fixrr/fixerr_home.dart';
-import 'package:chat_app/screens/user/home_screen.dart';
-import 'package:chat_app/screens/user/post_job.dart';
-import 'package:chat_app/screens/welcome_screen.dart';
+import 'package:fixrr/resources/utils/app_colors.dart';
+import 'package:fixrr/resources/utils/constants.dart';
+import 'package:fixrr/screens/auth/fixrr_signup_screen.dart';
+import 'package:fixrr/screens/auth/login_screen.dart';
+import 'package:fixrr/screens/auth/user_signup_screen.dart';
+import 'package:fixrr/screens/choose_option_screen.dart';
+import 'package:fixrr/screens/fixrr/chat_partners.dart';
+import 'package:fixrr/screens/fixrr/fixerr_home.dart';
+import 'package:fixrr/screens/user/home_screen.dart';
+import 'package:fixrr/screens/user/post_job.dart';
+import 'package:fixrr/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

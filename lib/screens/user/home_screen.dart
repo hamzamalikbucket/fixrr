@@ -1,4 +1,5 @@
-import 'package:chat_app/screens/user/post_job.dart';
+import 'package:fixrr/screens/user/post_job.dart';
+import 'package:fixrr/screens/user/user_chat_partners.dart';
 import 'package:flutter/material.dart';
 import '../../resources/utils/app_colors.dart';
 import '../../resources/utils/constants.dart';
@@ -19,6 +20,21 @@ class HomeState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      appBar: AppBar(
+        leading: const Icon(Icons.dashboard_outlined),
+        title: const Text('Welcome'),
+        centerTitle: false,
+        actions: [
+          IconButton(onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UserChatPartners(userName: Constants.userName),
+              ),
+            );
+          }, icon: Icon(Icons.message)),
+        ],
+      ),
       body: SafeArea(
         child: Container(
           width: MediaQuery.of(context).size.width,
