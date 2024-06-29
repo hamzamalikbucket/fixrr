@@ -1,18 +1,16 @@
 import 'dart:io';
-
-import 'package:fixrr/resources/utils/app_colors.dart';
-import 'package:fixrr/resources/utils/constants.dart';
-import 'package:fixrr/resources/widgets/BtnNullHeightWidth.dart';
-import 'package:fixrr/resources/widgets/NameInputWidget.dart';
-import 'package:fixrr/resources/widgets/email_input.dart';
-import 'package:fixrr/resources/widgets/text_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'dart:convert';
+import '../../resources/utils/app_colors.dart';
+import '../../resources/utils/constants.dart';
+import '../../resources/widgets/BtnNullHeightWidth.dart';
+import '../../resources/widgets/NameInputWidget.dart';
+import '../../resources/widgets/email_input.dart';
+import '../../resources/widgets/text_widget.dart';
 
 class FixrSignUpScreen extends StatefulWidget {
   @override
@@ -23,8 +21,6 @@ class FixrSignUpScreen extends StatefulWidget {
 }
 
 class FixrSignUpState extends State<FixrSignUpScreen> {
-
-//Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   late String name, email, password, confirmPassword, aboutDescription;
   bool showPassword = true;
   RangeValues _maxDistance = const RangeValues(0, 0);
@@ -34,24 +30,7 @@ class FixrSignUpState extends State<FixrSignUpScreen> {
   XFile? _profileImage;
   String? _profileImageBase64;
   bool isLoading = false;
-  late String currentLat,currentLong;
-
-  String? _currentAddress;
-  Position? _currentPosition;
 // Variable to store the base64 string of the profile image
-
-
-  Future<void> _getCurrentPosition() async {
-    final hasPermission = await _handleLocationPermission();
-    if (!hasPermission) return;
-    await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high)
-        .then((Position position) {
-      setState(() => _currentPosition = position);
-    }).catchError((e) {
-      debugPrint(e);
-    });
-  }
 
   late dynamic selectedServices; // List to store picked images
   Map<String, bool> services = {
@@ -523,20 +502,7 @@ class FixrSignUpState extends State<FixrSignUpScreen> {
                 print('Selected Services: $testarray');
 
 
-
-
-
-
-
                 try {
-                  _getCurrentPosition();
-                  print("Lat${_currentPosition?.latitude}");
-                  print("Longi${_currentPosition?.longitude}");
-
-                  setState(() {
-                    currentLat=_currentPosition!.latitude.toString();
-                    currentLong=_currentPosition!.longitude.toString();
-                  });
                   fixerSignUp();
                 } catch (e) {
                   confirmationPopup(
@@ -575,9 +541,6 @@ class FixrSignUpState extends State<FixrSignUpScreen> {
     print(jsonEncode(selectedServices));
     print(jsonEncode(base64Images));
     print("Profile Image base 64?>$_profileImageBase64");
-    print("Converted Longi$currentLong ");
-    print("Converted Lati$currentLat ");
-
 
     var response = await http.post(
       url,
@@ -591,8 +554,8 @@ class FixrSignUpState extends State<FixrSignUpScreen> {
         "services_prodvides":jsonEncode(selectedServices),
         "portfolio_img":jsonEncode(base64Images),
        "porfile_img":_profileImageBase64,
-        "lat":currentLat,
-        "lon":currentLong,
+        "lat":"32.15290269186808",
+        "lon":"74.19000735191902",
       },
     ).timeout(const Duration(seconds: 10), onTimeout: () {
       setState(() {
@@ -654,32 +617,5 @@ class FixrSignUpState extends State<FixrSignUpScreen> {
         color: AppColors.redColor,
       )
     ]).show();
-  }
-
-  Future<bool> _handleLocationPermission() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Location services are disabled. Please enable the services')));
-      return false;
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
-        return false;
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Location permissions are permanently denied, we cannot request permissions.')));
-      return false;
-    }
-    return true;
   }
 }

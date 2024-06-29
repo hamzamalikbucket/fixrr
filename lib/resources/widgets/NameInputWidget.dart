@@ -1,7 +1,6 @@
 import 'dart:ui';
-
-import 'package:fixrr/resources/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import '../utils/app_colors.dart';
 
 
 class NameInputWidget extends StatelessWidget {

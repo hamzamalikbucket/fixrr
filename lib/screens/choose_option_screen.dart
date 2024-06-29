@@ -1,9 +1,10 @@
-import 'package:fixrr/resources/utils/app_colors.dart';
-import 'package:fixrr/resources/utils/constants.dart';
-import 'package:fixrr/resources/widgets/BtnNullHeightWidth.dart';
-import 'package:fixrr/resources/widgets/text_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../resources/utils/app_colors.dart';
+import '../resources/utils/constants.dart';
+import '../resources/widgets/BtnNullHeightWidth.dart';
+import '../resources/widgets/text_widget.dart';
 
 class ChooseOptionScreen extends StatefulWidget {
   @override
