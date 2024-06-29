@@ -1,7 +1,7 @@
-
-import 'package:fixrr/resources/utils/app_colors.dart';
-import 'package:fixrr/resources/widgets/app_text.dart';
 import 'package:flutter/material.dart';
+
+import '../utils/app_colors.dart';
+import 'app_text.dart';
 
 class ToolbarBack extends StatelessWidget implements PreferredSizeWidget {
   final String title;

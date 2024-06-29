@@ -1,19 +1,19 @@
 import 'dart:convert';
-
-import 'package:fixrr/resources/utils/app_colors.dart';
-import 'package:fixrr/resources/utils/constants.dart';
-import 'package:fixrr/resources/widgets/BtnNullHeightWidth.dart';
-import 'package:fixrr/resources/widgets/NameInputWidget.dart';
-import 'package:fixrr/resources/widgets/email_input.dart';
-import 'package:fixrr/resources/widgets/text_widget.dart';
+import 'package:fixrr/screens/fixrr/fixerr_home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:rflutter_alert/rflutter_alert.dart';
 
+import '../../resources/utils/app_colors.dart';
+import '../../resources/utils/constants.dart';
+import '../../resources/widgets/BtnNullHeightWidth.dart';
+import '../../resources/widgets/email_input.dart';
 import '../user/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -64,16 +64,12 @@ class LoginState extends State<LoginScreen> {
                     Constants.height15,
                     Constants.height15,
                     form(context),
-
                   ],
                 ),
               ),
             ),
           ),
         ),
-
-
-
       ),
     );
   }
@@ -149,32 +145,30 @@ class LoginState extends State<LoginScreen> {
           ),
           Constants.height10,
           Constants.height10,
-          (isLoading)?
-          const Center(
-            child: CircularProgressIndicator(),
-          ):
-          BtnNullHeightWidth(
-            title: 'Login',
-            bgcolour: AppColors.greyBtnColor,
-            textcolour: AppColors.black,
-            onPress: () {
-              final form = _SignKey.currentState;
-              form!.save();
+          (isLoading)
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : BtnNullHeightWidth(
+                  title: 'Login',
+                  bgcolour: AppColors.greyBtnColor,
+                  textcolour: AppColors.black,
+                  onPress: () {
+                    final form = _SignKey.currentState;
+                    form!.save();
 
-              if(form.validate()){
-
-                try{
-                  login();
-                }catch (e){
-
-                  confirmationPopup(context, "An error Occurred.Try again later!");
-                }
-              }
-
-            },
-            width: MediaQuery.of(context).size.width,
-            height: 48,
-          ),
+                    if (form.validate()) {
+                      try {
+                        login();
+                      } catch (e) {
+                        confirmationPopup(
+                            context, "An error Occurred.Try again later!");
+                      }
+                    }
+                  },
+                  width: MediaQuery.of(context).size.width,
+                  height: 48,
+                ),
           Constants.height10,
         ],
       ),
@@ -191,7 +185,6 @@ class LoginState extends State<LoginScreen> {
       url,
       body: {"email": email, "password": password},
     ).timeout(const Duration(seconds: 10), onTimeout: () {
-
       setState(() {
         isLoading = false; // Hide loader
       });
@@ -204,15 +197,15 @@ class LoginState extends State<LoginScreen> {
       dynamic status = body['status'];
 
       if (status == "success") {
-
         dynamic user = body['user'];
         dynamic role = user['user_type'];
-        Constants.userID=user['id'].toString();
+        Constants.userID = user['id'].toString();
+        Constants.userName = user['name'];
+        Constants.userRole = role;
 
         if (role == 'User') {
           setState(() {
-
-            isLoading=false;
+            isLoading = false;
           });
           Navigator.pushAndRemoveUntil(
             context,
@@ -223,14 +216,16 @@ class LoginState extends State<LoginScreen> {
           );
         } else {
           setState(() {
-
-            isLoading=false;
+            isLoading = false;
           });
           //route to fixerr screen
-
-
-
-
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => const FixerHome(),
+            ),
+            (route) => false,
+          );
         }
       } else {
         setState(() {
@@ -239,7 +234,6 @@ class LoginState extends State<LoginScreen> {
         print(response.body);
         dynamic body = jsonDecode(response.body);
         String error = body['message'];
-
 
         confirmationPopup(context, error);
       }
@@ -253,8 +247,6 @@ class LoginState extends State<LoginScreen> {
 
       confirmationPopup(context, error);
     }
-
-
   }
 
   confirmationPopup(BuildContext dialogContext, String? error) {
