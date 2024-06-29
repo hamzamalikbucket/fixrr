@@ -1,8 +1,6 @@
-import 'package:fixrr/resources/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-
-
 import 'package:email_validator/email_validator.dart';
+import '../utils/app_colors.dart';
 
 
 class EmailInputWidget extends StatelessWidget {

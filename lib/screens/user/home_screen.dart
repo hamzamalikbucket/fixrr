@@ -1,15 +1,13 @@
-import 'dart:ffi';
-
-import 'package:fixrr/resources/utils/app_colors.dart';
-import 'package:fixrr/resources/utils/constants.dart';
-import 'package:fixrr/resources/widgets/BtnNullHeightWidth.dart';
-import 'package:fixrr/resources/widgets/text_widget.dart';
 import 'package:fixrr/screens/user/post_job.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:fixrr/screens/user/user_chat_partners.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import '../../resources/utils/app_colors.dart';
+import '../../resources/utils/constants.dart';
+import '../../resources/widgets/text_widget.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -22,6 +20,21 @@ class HomeState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      appBar: AppBar(
+        leading: const Icon(Icons.dashboard_outlined),
+        title: const Text('Welcome'),
+        centerTitle: false,
+        actions: [
+          IconButton(onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UserChatPartners(userName: Constants.userName),
+              ),
+            );
+          }, icon: Icon(Icons.message)),
+        ],
+      ),
       body: SafeArea(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -76,7 +89,7 @@ class HomeState extends State<HomeScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    const PostJob(jobName: "Cleaning ",),
+                                    const PostJob(jobName: "Cleaning",),
                               ),
                             );
                            // Navigator.pushNamed(context, Constants.jobPost,);
@@ -86,7 +99,7 @@ class HomeState extends State<HomeScreen> {
                             elevation: 25,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(
+                                side: const BorderSide(
                                     color: AppColors.primaryColor, width: 1.0)),
                             child: Column(
                               children: [
